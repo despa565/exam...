@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Callbacks Example</title>
+</head>
+<body>
+
+    <div id="data"></div>
+    <div id="datacomplete"></div>
+    <div id="async"></div>
+    <div id="asy"></div>
+<script>
+    // Callback function
+    function onComplete() {
+        document.getElementById("datacomplete").innerHTML="Callback executed."
+    }
+
+    // Example function with a callback
+    function doSomethingAsync(callback) {
+        setTimeout(function () {
+            document.getElementById("data").innerHTML="Task done!"
+            callback();
+        }, 1000);
+    }
+
+    // Using the function with a callback
+    doSomethingAsync(onComplete);
+
+
+
+
+
+    function fetchData() {
+        return new Promise((resolve, reject) => {
+            setTimeout(() => {
+                const data = { message: "Data fetched successfully!" };
+                resolve(data);
+            }, 2000);
+        });
+    }
+
+    // Using the Promise
+    fetchData()
+        .then((result) => {
+            document.getElementById("async").innerHTML=`${result.message}`
+
+        })
+        .catch((error) => {
+            document.getElementById("asy").innerHTML=`Error:${error}`
+
+        });
+
+    // Asynchronous function using async/await
+    async function fetchDataAsync() {
+        try {
+            const response = await fetchData();
+            document.getElementById("async").innerHTML=`${response.message}`
+
+        } catch (error) {
+            document.getElementById("asy").innerHTML=`Error:${error}`
+        }
+    }
+
+    // Using the async function
+    fetchDataAsync();
+</script>
+
+</body>
+</html>
